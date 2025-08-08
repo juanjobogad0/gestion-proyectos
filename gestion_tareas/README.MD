@@ -1,13 +1,37 @@
-INSTALACION DEL PROYECTO
+# Gestor de Proyectos
 
-1. Crear y activar entorno virtual:
+A simple and very useful tool for managing projects, helping users improve their efficiency and organization when working on multiple projects simultaneously. Each project can contain multiple tasks, which can be edited as needed.
+
+## Main Features
+
+Add multiple tasks to a project
+Easily edit tasks or projects
+Validations to safely create and delete projects
+
+## Technologies
+
+Django
+PostgreSQL 
+Django REST Framework to build the API
+HTML, CSS y Bootstrap for the IU
+
+
+## PROJECT INSTALLATION
+
+1. Create and activate a virtual environment:
    python -m venv env
 
-2. Instalar dependencias:
+2. Install dependencies:
    pip install -r requirements.txt
 
-3. Aplicar migraciones:
+
+3. Apply migrations:
    python manage.py migrate
 
-4. Levantar servidor:
+
+4. Start the server:
    python manage.py runserver
+
+
+
+
