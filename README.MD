@@ -4,21 +4,21 @@ A simple and very useful tool for managing projects, helping users improve their
 
 ## Main Features
 
-Add multiple tasks to a project
+-Add multiple tasks to a project
 
-Easily edit tasks or projects
+-Easily edit tasks or projects
 
-Validations to safely create and delete projects
+-Validations to safely create and delete projects
 
 ## Technologies
 
-Django
+-Django
 
-PostgreSQL 
+-PostgreSQL 
 
-Django REST Framework to build the API
+-Django REST Framework to build the API
 
-TML, CSS y Bootstrap for the IU
+-HTML, CSS y Bootstrap for the IU
 
 
 ## Installation
