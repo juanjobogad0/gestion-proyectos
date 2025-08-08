@@ -2,6 +2,7 @@
 .venv/
 env/
 venv/ 
+virtualenv
 
 # VSCode
 .vscode/
@@ -9,6 +10,14 @@ venv/
 # MacOS
 .DS_Store
 
+
+
 # Pytest cache
 .pytest_cache/
+
+
+#Docker
+*.pid
+*.seed
+*.pid.lock
 
