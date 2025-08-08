@@ -1,0 +1,87 @@
+{% extends 'frontend/navegacion.html' %}
+{% block contenido %}
+
+
+<h1 class="display-5 text-center mt-1">Editar Proyecto</h1>
+<div class="container bg-light mt-3 py-4 px-3 rounded w-50">
+
+  <form class="row g-3" action="{% url 'frontend_edit' proyecto.id %}" method="post">
+    {% csrf_token %}
+
+    <!-- nombre -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="name" class="col-form-label">Nombre</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" id="name" name="name" class="form-control w-25" value="{{ proyecto.name }}">
+        </div>
+      </div>
+    </div>
+
+    <!-- descripcion -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="descripcion" class="col-form-label">Descripción</label>
+        </div>
+        <div class="col-md-9">
+          <textarea id="description" name="description" rows="3" class="form-control w-50">{% if proyecto.description and proyecto.description != "None" %} {{ proyecto.description }}  {% endif %}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- estado -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="status" class="col-form-label">Estado</label>
+        </div>
+        <div class="col-md-9">
+          <select name="status" id="status" class="form-select w-25">            
+            <option value="active" {% if proyecto.status == "active" %}selected{% endif %}>Activo</option>
+            <option value="on_hold" {% if proyecto.status == "on_hold" %}selected{% endif %}>En Pausa</option>
+            <option value="completed" {% if proyecto.status == "completed" %}selected{% endif %}>Completado</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- inicio -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="start_date" class="col-form-label">Fecha de Inicio</label>
+        </div>
+        <div class="col-md-9">
+          <input type="date" id="start_date" name="start_date" class="form-control w-25" value="{{ proyecto.start_date }}" >
+        </div>
+      </div>
+    </div>
+
+    <!-- finalizacion -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="end_date" class="col-form-label">Fecha de Finalización</label>
+        </div>
+        <div class="col-md-9">
+          <input type="date" id="end_date" name="end_date" class="form-control w-25" value="{{ proyecto.end_date }}">
+        </div>
+      </div>
+    </div>
+
+    <!-- boton guardar -->
+    <div class="col-12 text-center mt-3">
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </div>
+    
+
+  </form>
+
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+.env
+.venv/
+env/
+venv/ 
+
+# VSCode
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Pytest cache
+.pytest_cache/
+

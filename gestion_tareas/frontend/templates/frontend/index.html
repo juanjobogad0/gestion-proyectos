@@ -1,0 +1,146 @@
+{% extends 'frontend/navegacion.html' %}\
+{% block contenido %}
+<div class="container">
+  <H1 class="display-5 text-center m-3">LISTA DE PROYECTOS</H1> 
+  
+  <!-- mensaje -->
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show w-75 mx-auto" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+  
+
+  <!-- NUEVO PROYECTO -->
+<div class="text-end mb-3">
+  <a class="btn btn-success" href="{% url 'frontend_create' %}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+      <path d="m.5 3 .04.87a2 2 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2m5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19q-.362.002-.683.12L1.5 2.98a1 1 0 0 1 1-.98z"/>
+      <path d="M13.5 9a.5.5 0 0 1 .5.5V11h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V12h-1.5a.5.5 0 0 1 0-1H13V9.5a.5.5 0 0 1 .5-.5"/>
+    </svg>
+    Nuevo Proyecto
+  </a>
+</div>
+
+<form method="get">
+<nav class="navbar bg-body-tertiary">
+  <div class="container w-25 ms-auto justify-content-evenly mt-3">
+
+      <input class="form-control me-2" type="search" placeholder="Nombre del Proyecto" aria-label="Search" name="buscar_name"/>
+      <button class="btn btn-outline-success btn-sm mt-2" type="submit">Buscar</button>
+      <button class="btn btn-outline-primary btn-sm mt-2" type="submit  onclick="window.location.href=window.location.pathname>Reset</button>
+
+  </div>
+</nav>
+</form>
+
+
+  <!-- PROYECTOS -->
+  <div class="table-responsive">
+    <table class="table table-striped align-middle text-center">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th>Creado</th>
+          <th>Actualizado</th>
+          <th>Tareas En Progreso</th>
+          <th>Tareas Pendientes</th>
+          <th>Tareas Completadas</th>
+          <th>Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for proyecto in page_obj %}
+        <tr>
+          <td>{{ proyecto.id }}</td>
+          <td>{{ proyecto.name }}</td>
+          <td>{{ proyecto.status }}</td>
+          <td>{{ proyecto.created_at }}</td>
+          <td>{{ proyecto.updated_at }}</td>
+          <td>{{ proyecto.t_en_progreso }}</td>
+          <td>{{ proyecto.t_pendientes }}</td>
+          <td>{{ proyecto.t_completadas }}</td>
+          <!-- ACCION -->
+          <td>            
+            <!-- Dettalle -->
+            <form action="{% url 'frontend_show' proyecto.id %}" method="get" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary btn-sm">
+                Detalle
+              </button>
+            </form>
+            
+            <!-- EDITAR -->
+              <form action="{% url 'frontend_edit' proyecto.id %}" method="get" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-warning btn-sm">
+                Editar
+              </button>
+            </form>
+
+            <!-- ELIMINAR -->
+            <form action="{% url 'frontend_delete' proyecto.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Seguro que quieres elminar este proyecto?');">
+                  Eliminar
+                </button>
+            </form>
+
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+
+
+
+
+
+</div>
+
+  <!-- paginacion -->
+<nav aria-label="Page navigation" class="d-flex justify-content-center">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Anterior</span>
+      </li>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <li class="page-item active">
+          <span class="page-link">{{ num }}</span>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">Siguiente</span>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% endblock %}

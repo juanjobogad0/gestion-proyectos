@@ -1,0 +1,114 @@
+{% extends 'frontend/navegacion.html' %}
+{% block contenido %}
+
+
+<h1 class="display-5 text-center mt-1">Editar Tarea</h1>
+<div class="container bg-light mt-3 py-4 px-3 rounded w-50">
+
+
+
+  <form class="row g-3" action="{% url 'frontend_editTask' pk=pk id=id %}" method="post">
+    {% csrf_token %}
+
+        <!-- proyecto -->
+
+          <input type="hidden" id="project" name="project" class="form-control w-25" value="{{ pk }}">
+
+
+
+
+    <!-- titulo -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="title" class="col-form-label">Titulo</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" id="title" name="title" class="form-control w-25" value="{{ tarea.title }}">
+        </div>
+      </div>
+    </div>
+
+    <!-- descripcion -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="descripcion" class="col-form-label">Descripción</label>
+        </div>
+        <div class="col-md-9">
+          <textarea id="description" name="description" rows="3" class="form-control w-50">{% if tarea.description and tarea.description != "None" %} {{ tarea.description }}  {% endif %}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- estado -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="status" class="col-form-label">Estado</label>
+        </div>
+        <div class="col-md-9">
+          <select name="status" id="status" class="form-select w-25">            
+            <option value="pending" {% if tarea.status == "pending" %}selected{% endif %}>Pendiente</option>
+            <option value="in_progress" {% if tarea.status == "in_progress" %}selected{% endif %}>En Progreso</option>
+            <option value="completed" {% if tarea.status == "completed" %}selected{% endif %}>Completado</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+        <!-- prioridad -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="priority" class="col-form-label">Prioridad</label>
+        </div>
+        <div class="col-md-9">
+          <select name="priority" id="priority" class="form-select w-25">            
+            <option value="high" {% if tarea.priority == "high" %}selected{% endif %}>Alto</option>
+            <option value="medium" {% if tarea.priority == "medium" %}selected{% endif %}>Medio</option>
+            <option value="low" {% if tarea.priority == "low" %}selected{% endif %}>Bajo</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+        <!-- vencimiento -->
+    <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="due_date" class="col-form-label">Fecha Limite</label>
+        </div>
+        <div class="col-md-9">
+          <input type="date" id="due_date" name="due_date" class="form-control w-25" value="{{ tarea.due_date }}">
+        </div>
+      </div>
+    </div>
+
+        <!--responsable -->
+        <div class="col-md-12">
+      <div class="row gx-1 align-items-center">
+        <div class="col-md-3">
+          <label for="assigned_to" class="col-form-label">Responsable</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" id="assigned_to" name="assigned_to" class="form-control w-25" value="{% if tarea.assigned_to and tarea.assigned_to != "None" %} {{ tarea.assigned_to }}  {% endif %}">
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- boton actualizar -->
+    <div class="col-12 text-center mt-3">
+      <button type="submit" class="btn btn-success">Actualizar</button>
+    </div>
+    
+
+  </form>
+
+
+
+</div>
+
+{% endblock %}

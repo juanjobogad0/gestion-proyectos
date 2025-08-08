@@ -1,0 +1,98 @@
+{% extends 'frontend/navegacion.html' %}\
+{% block contenido %}
+<div class="container " >
+  
+  <H2 class="display-5 text-center">Detalle del Proyecto</H2>
+
+  <!-- mensaje -->
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show w-75 mx-auto" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<!-- Nueva Tarea -->
+<div class="text-center mb-3 ">
+<a href="{% url 'frontend_createTask' proyecto.id %}" class="btn text-white bg-dark">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+    <path d="m.5 3 .04.87a2 2 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2m5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19q-.362.002-.683.12L1.5 2.98a1 1 0 0 1 1-.98z"/>
+    <path d="M13.5 9a.5.5 0 0 1 .5.5V11h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V12h-1.5a.5.5 0 0 1 0-1H13V9.5a.5.5 0 0 1 .5-.5"/>
+  </svg>
+  Nueva Tarea
+</a> 
+</div>
+
+
+<table class="table table-bordered w-75 mx-auto">
+  <tbody>
+  <tr>
+    <th class="text-start w-50">ID</th>
+    <td class="text-start">{{ proyecto.id }}</td>
+  </tr>
+  <tr>
+    <th class="text-start">Nombre</th>
+    <td class="text-start">{{ proyecto.name }}</td>
+  </tr>
+
+<tr>
+  <th class="text-start">Tareas</th>
+  <td class="text-start">
+    {% if proyecto.tasks %}
+      <ul class="list-unstyled mb-0">
+        {% for tarea in proyecto.tasks %}
+          <li class="mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>{{ tarea.title }}</span>
+
+              <form method="post" action="{% url 'frontend_updateStatus' pk=proyecto.id id=tarea.id %}" class="ms-2">
+                {% csrf_token %}
+                <label for="status-{{ tarea.id }}" class="visually-hidden">Cambiar estado</label>
+                <select id="status-{{ tarea.id }}" name="status" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
+                  <option value="pending" {% if tarea.status|lower == "pending" %}selected{% endif %}>Pendiente</option>
+                  <option value="in_progress" {% if tarea.status|lower == "in_progress" %}selected{% endif %}>En Progreso</option>
+                  <option value="completed" {% if tarea.status|lower == "completed" %}selected{% endif %}>Completado</option>
+                </select>
+              </form>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+      <a class="link-offset-2 link-underline link-underline-opacity-0" href="{% url 'frontend_showTask' proyecto.id %}">Ver detalles</a>
+    {% else %}
+      <span class="text-muted">Este proyecto aún no tiene tareas.</span>
+    {% endif %}
+  </td>
+</tr>
+
+  <tr>
+    <th class="text-start">Descripción</th>
+    <td class="text-start">{{ proyecto.description }}      
+    </td>
+  </tr>
+  <tr>
+    <th class="text-start">Estado</th>
+    <td class="text-start">{{ proyecto.status }}</td>
+  <tr>
+    <th class="text-start">Fecha de inicio</th>
+    <td class="text-start">{{ proyecto.start_date }}</td>
+  </tr>
+  <tr>
+    <th class="text-start">Fecha de finalización</th>
+    <td class="text-start">{{ proyecto.end_date }}</td>
+  </tr>
+  <tr>
+    <th class="text-start">Creado</th>
+    <td class="text-start">{{ proyecto.created_at }}</td>
+  </tr>
+  <tr>
+    <th class="text-start">Actualizado</th>
+    <td class="text-start">{{ proyecto.updated_at }}</td>
+  </tr>
+  </tbody>
+</div>
+
+
+{% endblock %}
