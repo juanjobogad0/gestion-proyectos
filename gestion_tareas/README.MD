@@ -1,4 +1,4 @@
-# Gestor de Proyectos
+# Project Manager
 
 A simple and very useful tool for managing projects, helping users improve their efficiency and organization when working on multiple projects simultaneously. Each project can contain multiple tasks, which can be edited as needed.
 
@@ -16,7 +16,8 @@ Django REST Framework to build the API
 HTML, CSS y Bootstrap for the IU
 
 
-## PROJECT INSTALLATION
+## Installation
+
 
 1. Create and activate a virtual environment:
    python -m venv env
